@@ -1,0 +1,342 @@
+:root {
+    --white: #FFF8DC;
+    --dark: #1f1d2b;
+    --mid: #353340;
+    --light: #808191;
+  }
+  
+  * {
+    box-sizing: border-box;
+    color: var(--white);
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  button:hover, a:hover {
+    text-decoration: none;
+    box-shadow: 0px 12px 9px -7px;
+  }
+
+  
+  a:link a:visited {
+    color: var(--white)
+  }
+  .ROW{
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+
+  /* 修改捲軸的整體樣式（僅適用於 WebKit 瀏覽器，如 Chrome 和 Edge） */
+::-webkit-scrollbar {
+  width: 6px; /* 捲軸寬度 */
+}
+/* 捲軸的軌道樣式 */
+::-webkit-scrollbar-track {
+  background: var(--dark); /* 軌道顏色 */
+  /* border-radius: 2px; 圓角 */
+}
+/* 捲軸的滑塊樣式 */
+::-webkit-scrollbar-thumb {
+  background: black; /* 滑塊顏色 */
+  border-radius: 3px; /* 圓角 */
+}
+
+
+
+
+  
+  body {
+    background-image:  url('/img/sunset.jpg');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #container {
+    background-color: var(--dark);
+    margin-top: 20px;
+    width: 90%;
+    height: 90vh;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+  }
+
+  aside {
+    width: 20%;
+    padding-right: 20px;
+  }
+
+  #aside_title {
+    margin-bottom: 20px;
+      /* 在此填寫樣式 */
+  }
+
+  .aside_items {
+    height: 71vh;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  .aside_items_title {
+    color: var(--light);
+    border-top: 1px var(--light) solid;
+  }
+
+  .aside_items_item {
+    display: flex;
+    height: 45px;
+    align-items: center;
+  }
+  .aside_items_item:hover .aside_items_item_title {
+    color: var(--white);
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  .aside_items_item:hover .aside_items_item_icon {
+    background-color: greenyellow;
+    transition: background-color 0.3s ease;
+  }
+
+  .aside_items_item_icon {
+      background-color: var(--light);
+      border-radius: 7px;
+      height: 25px;
+      width: 25px;
+      padding: 2px;
+      transition: background-color 0.3s ease;
+    }
+
+  .aside_items_item_title {
+    color: var(--light);
+    margin-left: 20px;
+    transition: background-color 0.3s ease;
+  }
+
+
+
+  main {
+    width: 80%;
+  }
+  #header {
+
+
+  }
+  #row1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #search {
+    background-color: var(--mid);
+    color: var(--light);
+    border: none; /* 移除邊框 */
+    outline: none; /* 移除點擊時的外框 */
+    height: 40px;
+    width: 450px;
+    border-radius: 7px;
+  }
+  #input,#auth {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #search_btn,#avatar,#auth_more,#auth_info {
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  #avatar{
+    height: 23px;
+    width: 23px;
+  }
+
+
+  #context {
+    height: 61vh;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  .theme {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 65px;
+  }
+
+
+  #part1 {
+
+  }
+  .topic_box2, .topic_box3, .topic_box4{
+    height: 35vh;
+    background-image:  url('/img/tung.jpg');
+    background-size: cover;
+    /* background-color: var(--mid); */
+    padding: 20px;
+    border-radius: 20px;
+  }
+  .topic_box2 {
+    width: 48%;
+  }  
+  .topic_box4 {
+    width: 24%;
+  }  
+  .topic_box3 {
+    width: 32%;
+  } 
+  .topic_box_title {
+
+  }
+  .topic_box_auth {
+
+  }
+  .topic_box_infos {
+
+  }
+
+
+  #part2 {
+      /* 在此填寫樣式 */
+  }
+
+
+
+  footer {
+    display: flex;
+    height: 0;
+
+  }
+  .footer_word {
+      /* 在此填寫樣式 */
+  }
+
+
+
+
+
+
+  
+  /* 以下五個都是for回溯鍵的 */
+  #toTop {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: rgb(228, 225, 225);
+    position: sticky;
+    bottom: 20px;
+    right: 20px;
+    float: right;
+    padding-top: 7px;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  #toTop.active {
+    opacity: 1;
+  }
+  #top {
+    top: 0;
+  }
+  #top:target {
+    animation: toTop 5s ease;
+  }
+  @keyframes toTop {
+    from {
+      top: -100%;
+    }
+    to {
+      top: 0;
+    }
+  }
+  /* 回溯鍵至此 */
+  
+  /* 手機 mobilephone */
+
+
+  @media(max-width:700px){
+
+    #container {
+      /* 在此填寫樣式 */
+    }
+  
+    #aside_title {
+        /* 在此填寫樣式 */
+    }
+  
+    #header {
+        /* 在此填寫樣式 */
+    }
+  
+    #part1 {
+        /* 在此填寫樣式 */
+    }
+  
+    #part2 {
+        /* 在此填寫樣式 */
+    }
+  
+  
+    .aside_items {
+        /* 在此填寫樣式 */
+    }
+  
+    .aside_items_title {
+        /* 在此填寫樣式 */
+    }
+  
+    .aside_items_item {
+        /* 在此填寫樣式 */
+    }
+  
+    .aside_items_item_icon {
+        /* 在此填寫樣式 */
+    }
+  
+    .aside_items_item_title {
+        /* 在此填寫樣式 */
+    }
+  
+    #header {
+      /* 在此填寫樣式 */
+    }
+    #row1 {
+
+    }
+    #search {
+      
+    }
+    #avatar {
+      
+    }
+    #auth_more {
+      
+    }
+    #auth_info {
+      
+    }
+    .theme {
+        /* 在此填寫樣式 */
+    }
+  
+    .topic {
+        /* 在此填寫樣式 */
+    }
+  
+    .topic_box {
+        /* 在此填寫樣式 */
+    }
+  
+    .footer_word {
+        /* 在此填寫樣式 */
+    }
+  }
+
+  
