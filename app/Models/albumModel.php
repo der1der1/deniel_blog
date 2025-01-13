@@ -13,6 +13,7 @@ class albumModel extends Model
         'title',
         'context',
         'back_img',
+        'photos',
         'show',
     ];
 }
