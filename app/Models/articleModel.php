@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class menuModel extends Model
+class articleModel extends Model
 {
-    
-    protected $table = 'menu';
+    protected $table = 'article';
 
     protected $fillable = [
         'category',
-        'icon_dir',
-        'back_img',
         'title',
+        'context',
+        'back_img',
+        'views',
         'show',
     ];
 }
