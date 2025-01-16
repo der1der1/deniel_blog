@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\menuModel;
 use App\Models\articleModel;
 use App\Models\albumModel;
+use Illuminate\Support\Facades\Hash;
 // use App\Models\chatModel;
 
 
@@ -41,6 +42,10 @@ class homeCtlr extends Controller
                 $page_chose = 'content.album';
                 return view('deniel_blog', compact('menus','page_chose', 'albums'));
     
+            case 10:
+                $page_chose = 'content.admin';
+                return view('deniel_blog', compact('menus','page_chose'));
+    
             default:
                 $homes = articleModel::inRandomOrder()->get();
                 $page_chose = 'content.home';
@@ -75,5 +80,23 @@ class homeCtlr extends Controller
         $page_chose = 'content.travel_show';
 
         return view('deniel_blog', compact('menus','page_chose', 'travel_show'));
+    }
+    public function admin_show(Request $pwd)
+    {
+
+        // $hashed_pwd = Hash::make('den959glow487');
+        // $hashed_input = Hash::make($pwd->pwd);
+        if ($pwd->pwd == 'den959glow487') {
+
+
+            $articles = articleModel::all();
+
+            $menus = menuModel::all();
+            return view('admin_pass', compact('menus','articles'));
+        } else {
+
+            return redirect()->route('home_show')->with('error', '大哥你不是我本人，不能進入。');
+        }
+
     }
 }

@@ -61,10 +61,17 @@
     background-color: var(--dark);
     margin-top: 20px;
     width: 90%;
-    height: 90vh;
+    height: 91vh;
     border-radius: 20px;
     padding: 30px;
     display: flex;
+  }
+
+  #login_box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
   #aboutme_container {
@@ -98,7 +105,7 @@
   }
 
   .aside_items_item {
-    display: flex;
+    display: flex; 
     height: 45px;
     align-items: center;
   }
@@ -134,7 +141,6 @@
   }
   #header {
 
-
   }
   #row1 {
     display: flex;
@@ -165,7 +171,6 @@
     height: 23px;
     width: 23px;
   }
-
 
   #context {
     height: 61vh;
@@ -206,19 +211,80 @@
   .topic_box3 {
     width: 32%;
   } 
-  .topic_box_title {
+
+
+  #admin_outerbox{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-between;
+  }
+  #admin_chose{
+    width: 15%;
+    height: 65vh;
+    background-color: var(--dark);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    /* align-items: center; */
+  }
+  .admin_chose_btn{
+    margin-bottom: 30px;
+    color: var(--white);
+    background-color: var(--dark);
+    border: none;
+    border-radius: 7px;
+    transition: background-color 0.3s ease;
 
   }
-  .topic_box_auth {
-
+  .admin_chose_btn:hover{
+    background-color: var(--mid);
+    box-shadow: none;
+    border-radius: 7px;
+    transition: background-color 0.3s ease;
   }
-  .topic_box_infos {
-
+  #admin_panel{
+    width: 85%;
+    height: 65vh;
+  }
+  .admin_panel_album{
+    width: 100%;
+    height: 65vh;
+    background-color: red;
+  }
+  .admin_panel_article{
+    width: 100%;
+    height: 65vh;
+  }
+  #admin_window{
+    
   }
 
-
-  #part2 {
-      /* 在此填寫樣式 */
+  .display_none{
+    display: none;
+  }
+  .one_article{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+  }
+  #edit_category_s, #edit_title_s, #edit_context_s{
+    background-color: var(--light);
+    border: none;
+    border-radius: 7px;
+    height: 6vh;
+    overflow: hidden;
+    padding: 10px;
+  }
+  #edit_category_s{
+    width: 20%;
+  }
+  #edit_title_s{
+    width: 27%;
+  }
+  #edit_context_s{
+    width: 47%;
   }
 
 
@@ -226,11 +292,9 @@
   footer {
     display: flex;
     height: 0;
+    margin-top: -6px;
+  }
 
-  }
-  .footer_word {
-      /* 在此填寫樣式 */
-  }
 
 
 

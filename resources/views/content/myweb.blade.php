@@ -8,7 +8,7 @@
                 </a>
             </div>
 
-            <h2 class="topic_box_title">Shopit</h2>
+            <h2 class="topic_box_title">Deniel's Blog</h2>
             <h4 class="topic_box_auth">Deniel Xie</h4>
             <h5 class="topic_box_infos">this is my personal blog yo</h5>
         </div>
