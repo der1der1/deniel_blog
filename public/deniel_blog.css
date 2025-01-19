@@ -219,6 +219,7 @@
     flex-wrap: nowrap;
     align-content: center;
     justify-content: space-between;
+
   }
   #admin_chose{
     width: 15%;
@@ -247,6 +248,8 @@
   #admin_panel{
     width: 85%;
     height: 65vh;
+    overflow: scroll;
+    overflow-x: hidden;
   }
   .admin_panel_album{
     width: 100%;
@@ -264,10 +267,22 @@
   .display_none{
     display: none;
   }
+  .display_block{
+    display: block;
+  }
   .one_article{
     display: flex;
     justify-content: space-around;
     margin-bottom: 25px;
+  }
+  .one_article_edit{
+    /* neeeed to be designed========================================================================================== */
+
+    border-radius: 7px;
+    background-color: var(--mid);
+    margin-bottom: 25px;
+    height: 32vh;
+    padding: 7px;
   }
   #edit_category_s, #edit_title_s, #edit_context_s{
     background-color: var(--light);
@@ -287,7 +302,87 @@
     width: 47%;
   }
 
+  /* 如果點開才會出現的edit區塊 */
+  .row1 {
+    display: flex;
+    justify-content: space-between;
+    height: 6vh;
+  }
+  .row1_category,
+  .row1_title,
+  .row1_back,
+  .row2_1_title,
+  .row2_context,
+  .row2_2_enter,
+  .row2_2_delete{
+    color: var(--white);
+    background-color: var(--light);
+    border: none;
+    border-radius: 7px;
+    height: 5vh;
+  }
+  .row1_category {
+    width: 120px;
+  }
+  .row1_title {
+    width: 250px;
+    /* margin-bottom: 1px; */
+  }
+  .row1_back {
+    width: 120px;
+    cursor: pointer;
+  }
+  .row2 {
+    display: flex;
+    justify-content: space-between;
+    height: 23vh;
+    margin-top: 2vh;
+  }
+  .row2_1 {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+  }
+  .row2_1_title {
+    width: 120px;
+    margin-bottom: 2vh;
+  }
+  .row2_1_row2_img {
+    width: 120px;
+    
+  }
+  .row2_context {
+    height: 21vh;
+    width: 250px;
 
+  }
+  .row2_2 {
+    width: 120px;
+  }
+  .row2_2_enter {
+    width: 120px;
+    height: 15vh;
+    margin-bottom: 2vh;
+    background-color: #079600;
+    cursor: pointer;
+    color: var(--white);
+    transition:  0.3s ease;
+  }
+  .row2_2_delete {
+    width: 120px;
+    background-color: #960000;
+    cursor: pointer;
+    color: var(--white);
+    transition:  0.3s ease;
+  }
+  .row2_2_enter:hover,
+  .row2_2_delete:hover,
+  .row1_back:hover {
+    box-shadow: 8px 8px 9px -8px black;    
+    font-weight: bold;
+    transition:  0.3s ease;
+    
+  }
 
   footer {
     display: flex;
