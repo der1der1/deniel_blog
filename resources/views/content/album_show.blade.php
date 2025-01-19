@@ -17,10 +17,12 @@
 <style>
     div#carousel { 
     perspective: 1200px; 
-    background: #100000; 
+    /* background: #100000;  */
+    background: #1f1d2b; 
     /* padding-top: 10%;  */
     font-size:0; 
-    margin-bottom: 3rem; 
+    /* margin-bottom: 3rem;  */
+    height: 60vh;
     overflow: scroll; 
     }
     figure#spinner { 
