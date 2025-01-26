@@ -13,7 +13,7 @@
         <h3 class="aboutme_text">喜歡動手做東西 也很喜歡做實驗</h3>
         <h3 class="aboutme_text">大三就進實驗室認真拿pipette</h3>
         <h3 class="aboutme_text">是也拿了不少年沒錯</h3>
-        <h3 class="aboutme_text">但在我發現寫成是挺有趣的之後</h3>
+        <h3 class="aboutme_text">但在我發現寫程式挺有趣的之後</h3>
         <h3 class="aboutme_text">我就跳Game了</h3>
         <h3 class="aboutme_text">現專長是php-Laravel的全端程式開發</h3>
         <h3 class="aboutme_text">寫過系統後台的儀表板</h3>

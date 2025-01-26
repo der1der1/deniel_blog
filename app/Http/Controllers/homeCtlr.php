@@ -43,7 +43,6 @@ class homeCtlr extends Controller
                 return view('deniel_blog', compact('menus','page_chose', 'albums'));
     
             case 10:
-                \Log::debug('case 10');
                 $page_chose = 'content.admin';
                 return view('deniel_blog', compact('menus','page_chose'));
     
@@ -85,11 +84,9 @@ class homeCtlr extends Controller
     public function admin_show(Request $pwd)
     {
         if ($pwd->pwd == 'den959glow487') {
-
-            $articles = articleModel::all();
-
+            $articles = articleModel::orderBy('id', 'desc')->get();
             $menus = menuModel::all();
-            return view('admin_pass', compact('menus','articles'));
+            return view('admin_pass', compact('menus','articles'))->with('success', 'Hi 歡迎編輯 !');
         } else {
 
             return redirect()->route('home_show')->with('error', '大哥你不是我本人，不能進入。');
@@ -97,8 +94,7 @@ class homeCtlr extends Controller
     }
     public function admin_pass()
     {
-        $articles = articleModel::all();
-
+        $articles = articleModel::orderBy('id', 'desc')->get();
         $menus = menuModel::all();
         return view('admin_pass', compact('menus','articles'));
     }
@@ -111,27 +107,9 @@ class homeCtlr extends Controller
         $article->title = ($article->title != $request->title) ? $request->title : $article->title;
         $article->context = ($article->context != $request->context) ? $request->context : $article->context;
 
-
         $article->save();
-        // 如果要刪除先刪掉
-        // if ($request->delete == "1") {
-        //     $product->delete();
-        // } else {
-        //     // 如果資料庫的該筆資料 != 網頁上的送出資料 => 更新
-        //     $product->id = ($product->id != $request->id) ? $request->id : $product->id;
-        //     $product->pic_name = ($product->pic_name != $request->pic_name) ? $request->pic_name : $product->pic_name;
-        //     $product->product_name = ($product->product_name != $request->product_name) ? $request->product_name : $product->product_name;
-        //     $product->description = ($product->description != $request->description) ? $request->description : $product->description;
-        //     $product->price = ($product->price != $request->price) ? $request->price : $product->price;
-        //     $product->ori_price = ($product->ori_price != $request->ori_price) ? $request->ori_price : $product->ori_price;
-        //     $product->category = ($product->category != $request->category) ? $request->category : $product->category;
-
-        //     $product->save();
-        // }
 
         // 5. 圖片處理區
-        // 檢查是否有上傳檔案
-        // 找到產品
         // 檢查是否有上傳新圖片
         if ($request->hasFile('back_img')) {
             // 取得上傳的圖片
@@ -144,6 +122,28 @@ class homeCtlr extends Controller
             $article->back_img = 'img/article_picture/' . $image->getClientOriginalName();
             $article->save();
         }
+        return redirect()->route('admin_pass');
+    }
+
+    public function admin_delete(Request $request) {
+        $article = articleModel::where('id', $request->id)->first();
+        $article->delete();
+        return redirect()->route('admin_pass');
+    }
+    public function create_article(Request $request) {
+        // 取得上傳的圖片
+        $image = $request->file('back_img');
+        // 移動新圖片到目標位置
+        $image->move(public_path('img/article_picture'), $image->getClientOriginalName());
+
+        articleModel::create([
+            'category' => $request->category,
+            'title' => $request->title,
+            'back_img' => 'img/article_picture/' . $image->getClientOriginalName(),
+            'context' => $request->context,
+            'show' => '1',
+        ]);
+
         return redirect()->route('admin_pass');
     }
 }

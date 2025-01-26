@@ -264,6 +264,18 @@
     
   }
 
+  #admin_add_btn {
+    background-color: var(--light);
+    border: none;
+    border-radius: 7px;
+    transition: box-shadow 0.3s ease;
+    width: 20%;
+    margin: 0 0 6vh 1%;
+  }
+  #admin_add_btn:hover{
+    box-shadow: 7px 7px 14px -7px;
+    transition: box-shadow 0.3s ease;
+  }
   .display_none{
     display: none;
   }
@@ -276,8 +288,6 @@
     margin-bottom: 25px;
   }
   .one_article_edit{
-    /* neeeed to be designed========================================================================================== */
-
     border-radius: 7px;
     background-color: var(--mid);
     margin-bottom: 25px;
@@ -368,11 +378,16 @@
     color: var(--white);
     transition:  0.3s ease;
   }
+  .for_delete {
+    margin-top: -40px;
+    display: flex;
+    justify-content: flex-end;
+  }
   .row2_2_delete {
     width: 120px;
     background-color: #960000;
     cursor: pointer;
-    color: var(--white);
+    /* color: var(--white); */
     transition:  0.3s ease;
   }
   .row2_2_enter:hover,

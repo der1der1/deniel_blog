@@ -63,6 +63,37 @@
                 </div>
                 <div id="admin_panel">
                     <div id="admin_panel_article" class="admin_panel_article">
+
+                        <!-- 新增 -->
+                         <button id="admin_add_btn" onclick="create_article()">
+                            <img src="{{ asset('img/plus.png') }}" title="新增文章" width="20" height="20">
+                        </button>
+                        <!-- ----------------------------------------------------------------------------------- -->
+                        <div id="create_article_box" class="display_none" style="background-color: var(--mid);padding:1%;border-radius:7px;">
+                        <!-- <div id="create_article_box" > -->
+                                <form method="POST" action="{{ route('create_article') }}" enctype="multipart/form-data">
+                                @csrf
+                                    <div class="row1">
+                                        <input type="text" class="row1_category" value="category" name="category">
+                                        <input type="text" class="row1_title" value="title" name="title">
+                                        <div class="row1_back" onclick="create_close()" title="點擊以收合"> close</div>
+                                    </div>
+                                    <div class="row2">
+                                        <div class="row2_1">
+                                            <!-- 顯示現有圖片 -->
+                                            <img src="" width="100">
+                                            <label for="image">change picture</label>
+                                            <input type="file" class="row2_1_row2_img" name="back_img" accept="image/*">
+                                        </div>
+                                        <textarea class="row2_context" name="context">plz type your article here</textarea>
+                                        <div class="row2_2">
+                                            <input class="row2_2_enter" type="submit" value="enter" title="確認">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        <!-- ----------------------------------------------------------------------------------- -->
+                        <!-- 修改 -->
                         @foreach ($articles as $article)
                         <div id="one_article_{{$article->id}}" class="one_article" onclick="editing({{$article->id}})" title="點擊以編輯">
                             <p id="edit_category_s">{{$article->category}}</p>
@@ -74,21 +105,19 @@
                             @endif
                         </div>
                         <!-- 如果點開才會出現的 -->
-                            <form method="POST" action="{{ route('admin_store') }}" enctype="multipart/form-data">
-                            @csrf
-                                <div id="admin_window_{{$article->id}}" class="display_none">
+                            
+                            <div id="admin_window_{{$article->id}}" class="display_none">
+                                <form method="POST" action="{{ route('admin_store') }}" enctype="multipart/form-data">
+                                @csrf
                                     <div class="row1">
                                         <input type="text" class="row1_category" value="{{$article->category}}" name="category">
                                         <input type="text" class="row1_title" value="{{$article->title}}" name="title">
                                         <div class="row1_back" onclick="editing({{$article->id}})" title="點擊以收合" > back</div>
-                                        <!-- <button onclick="editing({{$article->id}})">back</button> -->
                                     </div>
                                     <div class="row2">
                                         <div class="row2_1">
-                                            <!-- <input class="row2_1_title" type="text" value="{{$article->back_img}}" name="title"> -->
-                                            <!-- <img class="row2_1_row2_img" src="{{$article->back_img}}" alt=""> -->
                                             
-                                            {{-- 顯示現有圖片 --}}
+                                            <!-- 顯示現有圖片 -->
                                             <img src="{{ asset( $article->back_img) }}" width="100">
                                             <label for="image">change picture</label>
                                             <input type="file" class="row2_1_row2_img" name="back_img" accept="image/*">
@@ -97,21 +126,22 @@
                                         <div class="row2_2">
                                             <input type="text" name="id" value="{{$article->id}}" style="display:none;">
                                             <input class="row2_2_enter" type="submit" value="enter" title="確認">
-                                            <input class="row2_2_delete" type="text" placeholder="delete" name="delete" title="刪除">
                                         </div>
-                                
                                     </div>
-                                </div>
-                            </form>
-
-                        <!-- 
-                            <input type="text" id="edit_category_s" value="{{$article->category}}">
-                            <input type="text" id="edit_title_s" value="{{$article->title}}">
-                            <input type="text" id="edit_context_s" value="{{$article->context}}"> -->
+                                </form>
+                                
+                                <form method="POST" action="{{ route('admin_delete') }}" enctype="multipart/form-data">
+                                @csrf
+                                <!-- 刪除 -->
+                                    <div class="for_delete">
+                                        <input type="text" class="delete_id" value="{{$article->id}}" name="id" style="display:none;">
+                                        <input class="row2_2_delete" type="submit" value="delete" title="刪除">
+                                    </div>
+                                </form>
+                            </div>
                         @endforeach
                     </div>
                     <div id="admin_panel_album" class="admin_panel_album"></div>
-
                 </div>
             </div>
         </main>
@@ -137,19 +167,28 @@
 
     // 處裡單一項目項目編輯的開啟與關閉
     function editing(itemId) {
-    // 獲取對應的詳細資訊div
-    const detailDiv = document.getElementById(`admin_window_${itemId}`);
-    // 判斷是否有 one_article_edit class
-    if (detailDiv.classList.contains('one_article_edit')) {
-        // 如果有 one_article_edit class，移除它並添加 display_none
-        document.getElementById(`one_article_${itemId}`).className = "one_article";
-        detailDiv.classList.remove('one_article_edit');
-        detailDiv.classList.add('display_none');
-    } else {
-        // 如果沒有 one_article_edit class，移除 display_none 並添加 one_article_edit
-        document.getElementById(`one_article_${itemId}`).className = "display_none";
-        detailDiv.classList.remove('display_none');
-        detailDiv.classList.add('one_article_edit');
+        // 獲取對應的詳細資訊div
+        const detailDiv = document.getElementById(`admin_window_${itemId}`);
+        // 判斷是否有 one_article_edit class
+        if (detailDiv.classList.contains('one_article_edit')) {
+            // 如果有 one_article_edit class，移除它並添加 display_none
+            document.getElementById(`one_article_${itemId}`).className = "one_article";
+            detailDiv.classList.remove('one_article_edit');
+            detailDiv.classList.add('display_none');
+        } else {
+            // 如果沒有 one_article_edit class，移除 display_none 並添加 one_article_edit
+            document.getElementById(`one_article_${itemId}`).className = "display_none";
+            detailDiv.classList.remove('display_none');
+            detailDiv.classList.add('one_article_edit');
+        }
     }
+    function create_article() {
+        document.getElementById("admin_add_btn").className = "display_none";
+        document.getElementById("create_article_box").style.display = "block";
+
+    }
+    function create_close() {
+        document.getElementById("admin_add_btn").className = "admin_add_btn";
+        document.getElementById("create_article_box").style.display = "none";
 }
 </script>
