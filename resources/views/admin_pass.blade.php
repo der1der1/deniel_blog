@@ -1,7 +1,7 @@
 <!-- 報錯 -->
 @if(session('error'))
 <script>alert("{{ session('error') }}");</script>
-@elseif(session(key: 'success'))
+@elseif(session('success'))
 <script>alert("{{ session('success') }}");</script>
 @endif
 
@@ -141,7 +141,49 @@
                             </div>
                         @endforeach
                     </div>
-                    <div id="admin_panel_album" class="admin_panel_album"></div>
+                    <!-- 相簿 -->
+                    <div id="admin_panel_album" class="admin_panel_album">
+                        <!-- 新增相簿 -->
+                        <!-- 編輯與刪除 -->
+                        @foreach ($albums as $album)
+                        
+                            <div id="admin_album">
+                                <form method="POST" id="admin_album_info" action="{{ route('admin_album_store') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <!-- <div > -->
+                                        <input type="text" value="{{ $album->id }}" name="album_id" style="display:none;">
+                                        <input type="text" value="{{ $album->title }}" name="album_title" id="admin_album_title">
+                                        <input type="text" value="{{ $album->context }}" name="album_context" id="admin_album_context">
+                                        background image
+                                        <input type="file" name="back_img" id="imageInput" accept="image/*" onchange="previewImage(this);">
+                                        <img src="{{ asset($album->back_img) }}" id="admin_album_back_img" class="mt-2" style="max-width: 300px;">
+    
+                                        <div id="admin_album_control">
+                                            <input type="submit" value="check" id="admin_album_check">
+                                            <!-- <input type="submit" value="delete" id="admin_album_delete"> -->
+                                        </div>
+                                    <!-- </div> -->
+                                </form>
+
+
+                                
+                                <div id="admin_album_pictures">
+                                    @for ($i = 0 ; $i < 8 ; $i++)
+                                    <form  method="POST" id="admin_album_pictures_in" action="{{ route('admin_photo_store') }}" enctype="multipart/form-data">
+                                    @csrf
+                                        <input type="text" value="{{ asset($album->photos[$i]) }}" name="photo_id" style="display:none;">
+                                        
+                                        <!-- <img src="{{ asset($album->photos[$i]) }}" class="admin_album_picture"> -->
+                                        <button type="submit" class="admin_album_picture" name="photo_edited"><img src="{{ asset($album->photos[$i]) }}" class="admin_album_picture_in"></button>
+                                    </form>
+                                    @endfor
+                                </div>
+
+                            </div>
+                        @endforeach
+
+                    </div>
+                    <!-- 相簿 -->
                 </div>
             </div>
         </main>
@@ -154,6 +196,7 @@
     </footer>
 </body>
 </html>
+
 <script>
     function edit_article() {
         document.getElementById("admin_panel_article").className = "admin_panel_article";
@@ -163,7 +206,6 @@
         document.getElementById("admin_panel_album").className = "admin_panel_album";
         document.getElementById("admin_panel_article").className = "display_none";
     }
-
 
     // 處裡單一項目項目編輯的開啟與關閉
     function editing(itemId) {
@@ -185,10 +227,19 @@
     function create_article() {
         document.getElementById("admin_add_btn").className = "display_none";
         document.getElementById("create_article_box").style.display = "block";
-
     }
     function create_close() {
         document.getElementById("admin_add_btn").className = "admin_add_btn";
         document.getElementById("create_article_box").style.display = "none";
-}
+    }
+    function previewImage(input) {
+        const preview = document.getElementById('admin_album_back_img');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>

@@ -64,7 +64,6 @@ class homeCtlr extends Controller
 
         return view('deniel_blog', compact('menus','page_chose', 'album_show','photos'));
     }
-
     public function chat_show($chat)
     {
         $menus = menuModel::all();
@@ -86,7 +85,13 @@ class homeCtlr extends Controller
         if ($pwd->pwd == 'den959glow487') {
             $articles = articleModel::orderBy('id', 'desc')->get();
             $menus = menuModel::all();
-            return view('admin_pass', compact('menus','articles'))->with('success', 'Hi 歡迎編輯 !');
+            $albums = albumModel::all();
+            foreach($albums as $album) {
+                $album->photos = str_replace('; ', ';', $album->photos);
+                $album->photos = explode(';', $album->photos);             
+            }
+                
+            return view('admin_pass', compact('menus','articles','albums'))->with('success', 'Hi 歡迎編輯 !');
         } else {
 
             return redirect()->route('home_show')->with('error', '大哥你不是我本人，不能進入。');
@@ -96,7 +101,13 @@ class homeCtlr extends Controller
     {
         $articles = articleModel::orderBy('id', 'desc')->get();
         $menus = menuModel::all();
-        return view('admin_pass', compact('menus','articles'));
+        $albums = albumModel::all();
+        foreach($albums as $album) {
+            $album->photos = str_replace('; ', ';', $album->photos);
+            $album->photos = explode(';', $album->photos);             
+        }
+
+        return view('admin_pass', compact('menus','articles','albums'));
     }
 
     public function admin_store(Request $request) {
@@ -144,6 +155,56 @@ class homeCtlr extends Controller
             'show' => '1',
         ]);
 
+        return redirect()->route('admin_pass');
+    }
+    public function admin_album_store(Request $request){
+        // 文字處理區
+        $album = albumModel::where('id', $request->album_id)->first();
+
+        $album->title = ($album->title != $request->album_title) ? $request->album_title : $album->title;
+        $album->context = ($album->context != $request->album_context) ? $request->album_context : $album->context;
+        \Log::debug("title");
+        \Log::debug($request->title);
+        \Log::debug("context");
+        \Log::debug($request->context);
+        $album->save();
+        
+        // 圖片處理區
+        // 檢查是否有上傳新圖片
+        if ($request->hasFile('back_img')) {
+            // 驗證上傳的檔案
+            $request->validate([
+                'back_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            ]);
+            $image = $request->file('back_img');
+            // 生成唯一的檔案名稱
+            // $imageName = time() . '_' . uniqid() . '.' . $request->back_img->extension();
+            
+            // 如果存在舊圖片，刪除它
+            // if ($album->back_img && file_exists(public_path($album->back_img))) {
+            //     unlink(public_path($album->back_img));
+            // }
+            
+            try {
+                // 移動新圖片到目標位置
+                $request->back_img->move(public_path('img/'), $image->getClientOriginalName());
+                // 更新資料庫圖片路徑
+                $album->back_img = 'img/' . $image->getClientOriginalName();
+                $album->save();
+                return back()->with('success', '圖片上傳成功！');
+                
+            } catch (\Exception $e) {
+                // 處理錯誤
+                return back()->with('error', '圖片上傳失敗：' . $e->getMessage());
+            }
+        }
+
+        // 如果沒有修改圖片則回傳此行
+        return redirect()->route('admin_pass')->with('success', '修改成功！');
+    }
+    public function admin_photo_store(Request $request){
+        \Log::debug("request");
+        \Log::debug($request);
         return redirect()->route('admin_pass');
     }
 }
