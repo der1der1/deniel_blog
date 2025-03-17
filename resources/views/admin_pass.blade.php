@@ -164,21 +164,11 @@
                                         </div>
                                     <!-- </div> -->
                                 </form>
-
-
-                                
-                                <div id="admin_album_pictures">
+                                    <a href="{{ route('admin_photo_edit', ['album_chose' => $album->id]) }}" id="admin_album_pictures">
                                     @for ($i = 0 ; $i < 8 ; $i++)
-                                    <form  method="POST" id="admin_album_pictures_in" action="{{ route('admin_photo_store') }}" enctype="multipart/form-data">
-                                    @csrf
-                                        <input type="text" value="{{ asset($album->photos[$i]) }}" name="photo_id" style="display:none;">
-                                        
-                                        <!-- <img src="{{ asset($album->photos[$i]) }}" class="admin_album_picture"> -->
-                                        <button type="submit" class="admin_album_picture" name="photo_edited"><img src="{{ asset($album->photos[$i]) }}" class="admin_album_picture_in"></button>
-                                    </form>
+                                        <img src="{{ asset($album->photos[$i]) }}" class="admin_album_picture">
                                     @endfor
-                                </div>
-
+                                    </a>
                             </div>
                         @endforeach
 
@@ -242,4 +232,5 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
 </script>

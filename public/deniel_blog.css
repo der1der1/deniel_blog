@@ -65,6 +65,7 @@
     border-radius: 20px;
     padding: 30px;
     display: flex;
+    overflow: scroll;
   }
 
   #login_box {
@@ -219,8 +220,77 @@
     flex-wrap: nowrap;
     align-content: center;
     justify-content: space-between;
-
   }
+  #admin_outerbox2{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  #admin_outerbox2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-upload-form {
+    position: relative;
+    width: 24%;
+    margin-bottom: 15px;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.upload-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+.image-container:hover .upload-overlay {
+    opacity: 1;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
   #admin_chose{
     width: 15%;
     height: 65vh;
@@ -452,20 +522,12 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
-  #admin_album_pictures_in{
-    width: 24%;
-  }
   .admin_album_picture{
-    width: 100%;
-    border: none;
+    width:24%;
+    margin: 0 1% 1% 0;
     border-radius: 7px;
-    background-color: var(--mid);
   }
-  .admin_album_picture_in{
-    border-radius: 7px;
-    width: 100%;
 
-  }
   /* admin相簿 */
 
 

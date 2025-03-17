@@ -158,15 +158,14 @@ class homeCtlr extends Controller
         return redirect()->route('admin_pass');
     }
     public function admin_album_store(Request $request){
+        \Log::debug("request");
+        \Log::debug($request); 
         // 文字處理區
         $album = albumModel::where('id', $request->album_id)->first();
 
         $album->title = ($album->title != $request->album_title) ? $request->album_title : $album->title;
         $album->context = ($album->context != $request->album_context) ? $request->album_context : $album->context;
-        \Log::debug("title");
-        \Log::debug($request->title);
-        \Log::debug("context");
-        \Log::debug($request->context);
+
         $album->save();
         
         // 圖片處理區
@@ -177,13 +176,6 @@ class homeCtlr extends Controller
                 'back_img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
             $image = $request->file('back_img');
-            // 生成唯一的檔案名稱
-            // $imageName = time() . '_' . uniqid() . '.' . $request->back_img->extension();
-            
-            // 如果存在舊圖片，刪除它
-            // if ($album->back_img && file_exists(public_path($album->back_img))) {
-            //     unlink(public_path($album->back_img));
-            // }
             
             try {
                 // 移動新圖片到目標位置
@@ -203,8 +195,56 @@ class homeCtlr extends Controller
         return redirect()->route('admin_pass')->with('success', '修改成功！');
     }
     public function admin_photo_store(Request $request){
-        \Log::debug("request");
-        \Log::debug($request);
+            $image = $request->file('back_img');
+            try {
+                // 移動新圖片到目標位置
+                $request->back_img->move(public_path('img/'), $image->getClientOriginalName());
+                // 更新資料庫圖片路徑
+                $album->back_img = 'img/' . $image->getClientOriginalName();
+                $album->save();
+                return back()->with('success', '圖片上傳成功！');
+                
+            } catch (\Exception $e) {
+                // 處理錯誤
+                return back()->with('error', '圖片上傳失敗：' . $e->getMessage());
+            }
         return redirect()->route('admin_pass');
+    }
+    public function admin_photo_edit(Request $request){
+        $menus = menuModel::all();
+        $album = albumModel::where('id', $request->album_chose)->first();
+        $album->photos = rtrim($album->photos, ';');
+        $pics = explode(';', $album->photos);
+        return view('admin_photo_edit', compact('menus', 'album', 'pics'));
+    }
+    public function admin_photo_edit_store(Request $request){
+        $album = albumModel::where('id', $request->album_chose)->first();
+        $pics = explode(';', $album->photos);
+        $old_pic = $request->old_pic;
+        $image = $request->file('pic');
+        $pic_route = explode('/', $old_pic);
+        $new_pic_array = [];
+        foreach ($pics as $pic) {
+            if ($pic == $old_pic){
+                $pic_route[count($pic_route) - 1] = $image->getClientOriginalName();
+                $pic = implode('/', $pic_route);
+            }
+            $new_pic_array[] = $pic;
+        }
+        $album->photos = implode(';', $new_pic_array);
+        $this_route = [];
+        for ($i = 0; $i < 4; $i++) {
+            $this_route[] = $pic_route[$i];
+        }
+        $this_route_str = implode('/', $this_route);
+
+        try {
+            $image->move(public_path($this_route_str . '/'), $image->getClientOriginalName());
+            $album->save();
+            return back()->with('success', '圖片上傳成功！');
+        } catch (\Exception $e) {
+            return back()->with('error', '圖片上傳失敗：' . $e->getMessage());
+        }
+        return back();
     }
 }
