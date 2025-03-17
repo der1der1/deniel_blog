@@ -21,7 +21,7 @@
     <div id="container">
         <aside>
             <a href="{{ route('home_show') }}">
-                <h2 id="aside_title">Deniel's Blog</h2>
+                <h2 id="aside_title">Deniel's Blog123</h2>
             </a>
             <div class="aside_items">
                 <h4 class="aside_items_title">topic</h4>
